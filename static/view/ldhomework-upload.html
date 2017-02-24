@@ -12,6 +12,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+	 <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/fileinput.min.css" rel="stylesheet">
 	<link href="/css/marketing.css" rel="stylesheet" type="text/css">	
 
@@ -28,7 +29,7 @@
 					<ul class="nav-links">
 						<li><a href="#"><strong>首页</strong></a></li>
 						<li><a href="#"><strong>上传我的作业</strong></a></li>
-						<li><a href="#"><strong>作业明细</strong></a></li>
+						<li><a href="/view/ldhomeworkfb"><strong>作业明细</strong></a></li>
 					</ul>
 				</nav>
 				<div class="row">
@@ -108,13 +109,17 @@
         uploadUrl: '/uploadFile',
 		uploadAsync: true,
 		elErrorContainer: "#errorBlock",
+		allowedPreviewTypes: ['pdf'],
 		previewFileIcon: '<i class="fa fa-file"></i>',
-		allowedPreviewTypes: ['image', 'text'], // allow only preview of image & text files
-		previewFileIconSettings: {
-			'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-			'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-			'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
-    }
+	    previewFileIconSettings: {
+	        'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+	        'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+	    },
+	    uploadExtraData: {
+	    	userId: 6,
+	    	classId: 6,
+	    	lessionId: 10
+	    }
 
     });
 	$('#file-0a').on('fileuploaderror', function(event, data, previewId, index) {
