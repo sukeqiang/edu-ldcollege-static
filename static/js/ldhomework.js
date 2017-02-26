@@ -23,13 +23,13 @@ Date.prototype.Format = function(fmt)
   return fmt; 
 }
 
-function initTable() {
+function initTable(classId,lessionId) {
 	// 先销毁表格
 	// $('#ldhomework-table').bootstrapTable('destroy');
 	// 初始化表格,动态从服务器加载数据
 	$("#ldhomework-table").bootstrapTable({
 		method : "get", // 使用get请求到服务器获取数据
-		url : "/ldHomeWorkList?classId=6&lessionId=10", // 获取数据的Servlet地址
+		url : "/ldHomeWorkList?classId=" + classId + "&lessionId=" + lessionId, // 获取数据的Servlet地址
 		contentType : 'application/json;charset=UTF-8',// 这里我就加了个utf-8
 		dataType : 'json',
 		striped : true, // 表格显示条纹
@@ -52,14 +52,8 @@ function initTable() {
 			return param;
 		},
 		onLoadSuccess : function(data) { // 加载成功时执行
-		// layer.msg("加载成功");
-			console.log(data[0]);
 		},
 		onLoadError : function() { // 加载失败时执行
-		// layer.msg("加载数据失败", {
-		// time : 1500,
-		// icon : 2
-		// });
 		}
 	});
 }
@@ -84,7 +78,11 @@ function homeworkFilenameFormatter(value, row) {
 			icon = "<i class='fa fa-file-powerpoint-o fa-lg' aria-hidden='true'></i>";
 		}
 	}
-	return icon + "&nbsp;&nbsp;" + value;
+	return icon + "&nbsp;&nbsp;" + "<a href='/downloadFile?homeworkId="+ row.id +"'>" + value + "</a>";
+}
+
+function userIdFormatter(value,row) {
+	return value;
 }
 
 function bestFlagFormatter(value, row) {
@@ -111,27 +109,74 @@ function createDateFormatter(value, row) {
 	return new Date(value).Format("yyyy年MM月dd日");
 }
 
-function commentBox() {
+function commentBox(homeworkId,userId) {
     bootbox.dialog({ 
     	title: "评论",
-    	message: htmlComment
-    	})
+    	message: htmlComment,
+    	buttons:             
+        {
+            success : {
+                label : "<i class='icon-ok'></i> 提交",
+                className : "btn-success",
+                callback: function() {
+                	$("#userId").attr("value",userId);
+                	$("#homeworkId").attr("value",homeworkId);
+                	$("#myId").attr("value",myId);
+                    var params = $("#comment_form").serialize();
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "/ldHomeWorkComment",
+                        data: params,
+                        success: function(data) {
+                            if (data.result == '1') {
+                            	bootbox.alert("提交成功!",function(){ 
+                            			location.reload();
+                            		});
+                            } else if(data.result == '0') {
+                            	bootbox.alert(data.desc,function(){ 
+                        			location.reload();
+                        		});
+                            } else {
+                            	bootbox.alert("未知错误!",function(){ 
+                        			location.reload();
+                        		});
+                            }
+                        }
+                    });
+                }
+            },
+            cancel: {
+                label: '取消',
+                className: 'btn-danger'
+            }
+        }
+    })
 }
 
 function actionFormatter(value, row) {
-	var str = "<a class='btn btn-default' onclick='commentBox()' aria-label='Settings'><i class='fa fa-commenting' aria-hidden='true'></i> 评论</a>&nbsp;&nbsp;"
+	var str = "<a class='btn btn-default' onclick='commentBox(" + row.id +"," + row.userId + ")' aria-label='Settings'>" +
+			"<i class='fa fa-commenting' aria-hidden='true'></i> 评论</a>&nbsp;&nbsp;"
 		str+="<a class='btn btn-default' href='#' aria-label='Settings'><i class='fa fa-comments' aria-hidden='true'></i> 查看全部</a>"
 	return str;
 }
 
+(function($){
+	$.getUrlParam = function(name) {
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r!=null) return unescape(r[2]); return null;
+	}
+})(jQuery);
 
+var myId;
 $(document).ready(function() {
+	myId= $.getUrlParam('myId');
 	// 调用函数，初始化表格
-	initTable();
+	initTable($.getUrlParam('classId'),$.getUrlParam('lessionId'));
 });
 
-
-var htmlComment = "<form class='form-horizontal'>                                                           "+
+var htmlComment = "<form class='form-horizontal' id='comment_form'>                                                           "+
 "<fieldset>                                                                               "+
 "<div class='form-group'>                                                                 "+
 "  <label class='col-md-4 control-label' for='levelFlag'>作业等级</label>                 "+
@@ -159,7 +204,7 @@ var htmlComment = "<form class='form-horizontal'>                               
 "  <div class='col-md-4'>                                                                 "+
 "  <div class='radio'>                                                                    "+
 "    <label for='evaluate-0'>                                                             "+
-"      <input name='evaluate' id='evaluate-0' value='1' checked='checked' type='radio'>   "+
+"      <input name='evaluate' id='evaluate-0' value='1' type='radio'>   "+
 "      点赞                                                                               "+
 "    </label>                                                                             "+
 "	</div>                                                                                "+
@@ -174,15 +219,11 @@ var htmlComment = "<form class='form-horizontal'>                               
 "<div class='form-group'>                                                                 "+
 "  <label class='col-md-4 control-label' for='mark'>我对同学有话说</label>                "+
 "  <div class='col-md-4'>                                                                 "+
-"    <textarea class='form-control' id='mark' name='mark' rows=10>200字以内</textarea>            "+
-"  </div>                                                                                 "+
-"</div>                                                                                   "+
-"<div class='form-group'>                                                                 "+
-"  <label class='col-md-4 control-label' for='subcommit'></label>                         "+
-"  <div class='col-md-8'>                                                                 "+
-"    <button id='subcommit' name='subcommit' class='btn btn-success'>提交</button>        "+
-"    <button id='cancel' name='cancel' class='btn btn-warning'>取消</button>              "+
+"    <textarea class='form-control' id='mark' name='mark' rows='5'></textarea>            "+
 "  </div>                                                                                 "+
 "</div>                                                                                   "+
 "</fieldset>                                                                              "+
+"<input type='hidden' name='homeworkId' id='homeworkId' />"+
+"<input type='hidden' name='myId' id='myId' />"+
+"<input type='hidden' name='userId' id='userId' />"+
 "</form>                                                                                  ";

@@ -24,14 +24,14 @@
 	       data-showColumns="true">
 		    <thead>
 		        <tr>
-		            <th data-field="userId" data-valign="middle" data-align="center">学员ID</th>
+		            <th data-field="userId" data-formatter="userIdFormatter" data-valign="middle" data-align="center">学员ID</th>
 	            	<th data-field="homeworkFilename" data-formatter="homeworkFilenameFormatter" data-valign="middle" data-align="left">作业文件名</th>
 	            	<th data-field="createDate" data-sortable="true" data-formatter="createDateFormatter" data-valign="middle" data-align="center">提交时间</th>
 	            	<th data-field="starCount" data-formatter="starCountFormatter" data-valign="middle" data-align="center">点赞数</th>
 	            	<th data-field="negativeCount" data-formatter="negativeCountFormatter" data-valign="middle" data-align="center">差评数</th>
 	            	<th data-field="bestFlag" data-formatter="bestFlagFormatter" data-valign="middle" data-align="center">是否优秀作业</th>
 	            	<th data-field="correctFlag" data-formatter="correctFlagFormatter" data-valign="middle" data-align="center">是否批改过</th>
-	            	<th data-formatter="actionFormatter" data-events="actionEvents" data-valign="middle" data-align="center">操作</th> 
+	            	<th data-formatter="actionFormatter" data-valign="middle" data-align="center">操作</th> 
 		        </tr>
 		    </thead>
 		    <tbody>
@@ -58,5 +58,4 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js" type="text/javascript"></script>
 <script src="/js/plugins/bootbox.js" type="text/javascript"></script>
 <script src="/js/ldhomework.js" type="text/javascript"></script>
-
 </html>
