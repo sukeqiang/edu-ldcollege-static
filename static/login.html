@@ -3,24 +3,42 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
 <meta property="og:title" content="登录">
 <title>登录</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="/css/base.css" rel="stylesheet" type="text/css">
 <link href="/css/main.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/js/plugins/watch.js"></script>
+<script type="text/javascript" async="" src="/js/plugins/watch.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery_002.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery-ui.js"></script>
 <script type="text/javascript" src="/js/plugins/bootstrap.js"></script>
 <script type="text/javascript" src="/js/plugins/main.js"></script>
-<script type="text/javascript" src="/js/plugins/basic.htm"></script>
 <script type="text/javascript" src="/js/plugins/jqBootstrapValidation.js"></script>
 <script type="text/javascript" src="/js/plugins/select.js"></script>
 <script type="text/javascript" src="/js/plugins/charts.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery.js"></script>
 <link rel="icon" type="image/png" href="/img/favicon.png">
-</head>
+<script>
+//----FIXED HEADER
+window.onscroll = function() {
+	var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+	if(scrolled > 0){
+        $('.fixed-header').addClass('fixed-header-active');
+	}
+	if(scrolled <= 0){
+        $('.fixed-header').removeClass('fixed-header-active');
+	}
+	if(scrolled > 1000){
+    	$('.scroll-top').fadeIn(600);
+    }
+    if(scrolled <= 1000){
+        $('.scroll-top').fadeOut(600);
+    }
+}
+</script></head>
 
 <body class="layout-temp">
 	<div class="mp-container">
@@ -35,12 +53,12 @@
 		    			<fieldset class="tab-panel">
 		                    <div id="alerts"></div>
 							<div class="js_api_signin_form">
+							    <form id='comment_form' action="/signin" method="POST">
 							        <!--Field-->
 							        <div class="control-group">
 							            <div class="controls">
 							                <label class="help-block"></label>
-							                <input autofocus="" data-validation-email-message="邮箱地址输入无效" data-validation-required-message="请输入邮箱地址" 
-							                name="login" placeholder="邮箱地址" aria-invalid="false" type="email">
+							                <input autofocus="" data-validation-email-message="邮箱地址输入无效" data-validation-required-message="请输入邮箱地址" name="login" placeholder="邮箱地址" aria-invalid="false" type="email">
 							            </div>
 							        </div>
 							        <!--Field-->
@@ -50,24 +68,19 @@
 							                <input data-validation-required-message="请输入密码" name="password" placeholder="密码" aria-invalid="false" type="password">
 							            </div>
 							        </div>
-							        <button class="btn btn-primary btn-block btn-lg js_api_signin" type="submit">登录</button>
+							        <button class="btn btn-primary btn-block btn-lg js_api_signin" type="submit" >Login</button>
 							        <a class="f-small-13" href="#">忘记密码?</a>
-							</div>               
-						 </fieldset>
+							    </form>
+							</div>                
+						</fieldset>
 		    		</div>
 		    	</div>
-		        <div class="col-lg-12">
+		     	<div class="col-lg-12">
 		            <br>
 		            <span class="color-light f-small-14">Copyright ©2017 sukeqiang. All Rights Reserved.</span>
 		        </div>  
 		    </div>
-		</section>
+		</section>	
 	</div>
-	<div class="copyright">
-		<span class="color-light">Copyright ©2017 sukeqiang. All Rights Reserved.</span>
-	</div>
-	<a class="scroll-top" style="display: none;">
-		<img src="/img/svg/arrow_top.svg" alt="" height="20px">
-	</a>
 </body>
 </html>

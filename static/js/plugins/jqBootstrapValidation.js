@@ -18,7 +18,30 @@
 			sniffHtml: true, // sniff for 'required', 'maxlength', etc
 			preventSubmit: true, // stop the form submit event from firing if validation fails
 			submitError: false, // function called if there is an error when trying to submit
-			submitSuccess: false, // function called just before a successful submit event is sent to the server
+			submitSuccess: function (form,e) {
+                var url = form.attr("action");
+                var params = form.serialize();
+	            	$.ajax({
+	            	  type: 'POST',
+		              url: url,
+		              data: params,
+		              success: function(data) {
+		            	  data = jQuery.parseJSON(data);
+		                  if(data.is_reload_page != null){
+		                      location.reload(); 
+		                  }
+		                  if(data.new_location != null && data.new_location.length > 0){
+		                      location = data.new_location;
+		                      return;
+		                  }
+		                  if(data.msgs != null){
+		                      $.each(data.msgs, function(k, v) {
+		                          show_msg(v.body, v.type);
+		                      });
+		                  }
+		              }
+	            	});
+            }, // function called just before a successful submit event is sent to the server
             semanticallyStrict: false, // set to true to tidy up generated HTML output
 			autoAdd: {
 				helpBlocks: true
@@ -74,6 +97,8 @@
             $form.removeClass("error");
             if ($.isFunction(settings.options.submitSuccess)) {
               settings.options.submitSuccess($form, e);
+              return false;
+              
             }
           }
         });

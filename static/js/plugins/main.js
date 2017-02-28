@@ -4,25 +4,26 @@ $(document).ready(function(){
         $("html, body").animate({ scrollTop: 0 }, 1500);
         return false;
     });
-    $('.js_api_signup_form .js_api_signup').click(function(){
-        $('.js_signup_loading').show();
-        var data = new Object();
-        data['action'] = 'signup';
-        data['login'] = $('.js_api_signup_form [name=login]').val();
-        data['password'] = $('.js_api_signup_form [name=password]').val();
-        send('/ajax/signup', data, function(){
-            $('.js_signup_loading').hide();
-        });
-    });
-    $('.js_api_signin_form .js_api_signin').click(function(){
-        var data = new Object();
-        data['action'] ="/signin";
-        data['login'] = $('.js_api_signin_form [name=login]').val();
-        data['password'] = $('.js_api_signin_form [name=password]').val();
-        send('/signin', data, function(){
-           
-        });
-    });
+//    $('.js_api_signup_form .js_api_signup').click(function(){
+//        $('.js_signup_loading').show();
+//        var data = new Object();
+//        data['action'] = 'signup';
+//        data['login'] = $('.js_api_signup_form [name=login]').val();
+//        data['password'] = $('.js_api_signup_form [name=password]').val();
+//        send('/ajax/signup', data, function(){
+//            $('.js_signup_loading').hide();
+//        });
+//    });
+//    $('.js_api_signin_form .js_api_signin').click(function(){
+//        var data = new Object();
+////        data['action'] ="/signin";
+////        data['login'] = $('.js_api_signin_form [name=login]').val();
+////        data['password'] = $('.js_api_signin_form [name=password]').val();
+//        var params = $("#comment_form").serialize();
+//        send('/signin', params, function(){
+//           
+//        });
+//    });
     $('.js_api_logout').click(function(){
         var data = new Object();
         data['action'] = 'logout';
@@ -39,6 +40,15 @@ $(document).ready(function(){
             
         });
     });
+    
+//    $.getJSON("/getLdclass", function(data) {
+//    	var selectObj = $("#selectpicker");
+//    	selectObj.find("option").remove();
+//    	selectObj.append();
+//    	$.each(data, function() {
+//    		
+//    	})
+//    });
 });
 function delete_file_check(file_id){
     if(confirm("Are you sure?")){
@@ -50,29 +60,28 @@ function delete_file_check(file_id){
     }
 }
 
+
 function send(url, params, callback){
-    $(document).ready(function(){
-    	$.ajax({
-            type: "post",
-            dataType: "json",
-            url: url,
-            data: params,
-            success: function(data_in) {
-                if(data_in.is_reload_page != null){
-                    location.reload(); 
-                }
-                if(data_in.new_location != null && data_in.new_location.length > 0){
-                    location = data_in.new_location;
-                }
-                if(data_in.msgs != null){
-                    $.each(data_in.msgs, function(k, v) {
-                        show_msg(v.body, v.type);
-                    });
-                }
-                callback(data_in);
-            }
-        });
-    });
+
+//	$.ajax({
+//        type: "post",
+//        url: url,
+//        data: params,
+//        success: function(data) {
+//            if(data.is_reload_page != null){
+//                location.reload(); 
+//            }
+//            if(data.new_location != null && data.new_location.length > 0){
+//                location = data.new_location;
+//            }
+//            if(data.msgs != null){
+//                $.each(data.msgs, function(k, v) {
+//                    show_msg(v.body, v.type);
+//                });
+//            }
+//            callback(data);
+//        }
+//    });
 }
 
 //type 1-ok, 2-warning, 3-error
@@ -165,6 +174,6 @@ $('.js-popup-init').click(function(){
 
 //PRELOADER SHOWER ON SAVE
     $('.js-preloader').click(function(){
-    $('.progress-indicator').show().delay(400).fadeOut(500);
-});
+    	$('.progress-indicator').show().delay(400).fadeOut(500);
+    });
 });

@@ -10,26 +10,68 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-02-21 19:07:46
+Date: 2017-02-28 19:19:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for authorities
+-- Table structure for ldclass
 -- ----------------------------
-DROP TABLE IF EXISTS `authorities`;
-CREATE TABLE `authorities` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `authority` varchar(50) NOT NULL,
+DROP TABLE IF EXISTS `ldclass`;
+CREATE TABLE `ldclass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `className` varchar(255) DEFAULT NULL,
+  `quarter` varchar(10) DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
+  `endTime` datetime DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of authorities
+-- Records of ldclass
 -- ----------------------------
-INSERT INTO `authorities` VALUES ('1', 'leader', 'admin');
+INSERT INTO `ldclass` VALUES ('4', 'spring架构篇', '第一季', '2017-02-28 13:14:09', '2017-05-01 13:14:11', '');
+
+-- ----------------------------
+-- Table structure for ldcourse
+-- ----------------------------
+DROP TABLE IF EXISTS `ldcourse`;
+CREATE TABLE `ldcourse` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` bigint(20) DEFAULT NULL,
+  `courseTitle` varchar(100) DEFAULT NULL,
+  `days` int(11) DEFAULT NULL,
+  `createTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ldcourse
+-- ----------------------------
+INSERT INTO `ldcourse` VALUES ('1', null, 'SOLID设计原则详解(上）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('2', null, 'SOLID设计原则详解(下）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('3', null, '组件与容器技术原理和实践', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('4', null, 'SPRING组件的定义用法', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('5', null, 'Spring配置加载与Profile用法', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('6', null, '组件装配（泛型，AOP方式注入，反射入门）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('7', null, '观察者模式与Spring用户消息机制用法', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('8', null, 'DIY 注解方式的SPRING 容器', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('9', null, '测试驱动开发与Spring Test框架', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('10', null, 'Spring Core原理分析', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('11', null, 'Spring AOP原理和实践（上）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('12', null, 'Spring AOP原理和实践（下）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('13', null, 'J2EE事务与XA事务', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('14', null, 'SPRING事务框架原理与实现机制', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('15', null, 'Spring编程式事物与托管事务', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('16', null, 'Spring事务高级篇（含aspectj事务）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('17', null, 'Spring注解事务与XML事务融合与替换', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('18', null, 'Spring Boot篇(Spring Boot入门,Auto Config原理,Spring Boot MVC（Databinding、Data validation）)', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('19', null, 'Spring Security', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('20', null, 'Spring Session(分布式会话）', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('21', null, 'Spring Websocket', '7', '2017-02-28 13:09:43');
+INSERT INTO `ldcourse` VALUES ('22', null, 'Spring Boot+Bootstrap+Jquery前端入门', '7', '2017-02-28 13:09:43');
 
 -- ----------------------------
 -- Table structure for ldhomework
@@ -50,13 +92,12 @@ CREATE TABLE `ldhomework` (
   `best_flag` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_class_lession_idx` (`user_id`,`class_id`,`lession_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ldhomework
 -- ----------------------------
-INSERT INTO `ldhomework` VALUES ('4', '5', '6', '10', 'homeworkFilepath23', 'filename12', '2017-02-21 15:21:06', '2017-02-21 15:22:55', '0', '7', '10', '1');
-INSERT INTO `ldhomework` VALUES ('6', '6', '6', '10', 'homeworkFilepath', 'filename', '2017-02-21 16:15:25', '2017-02-21 16:15:25', '03333', '70', '100', '11');
+INSERT INTO `ldhomework` VALUES ('20', '6', '6', '10', 'C:/work/uploadtmp/', 'CU_TAX_DSN_销项发票总体设计_20131111_交流版_.ppt _兼容模式_.pdf', '2017-02-24 18:55:40', '2017-02-24 19:05:02', '0', '0', '0', '2');
 
 -- ----------------------------
 -- Table structure for ldhomeworkfb
@@ -70,73 +111,33 @@ CREATE TABLE `ldhomeworkfb` (
   `level_flag` char(255) DEFAULT NULL,
   `mark` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ldhomeworkfb
 -- ----------------------------
+INSERT INTO `ldhomeworkfb` VALUES ('33', '100', '6', '7', 'A', 'hello');
+INSERT INTO `ldhomeworkfb` VALUES ('34', '100', '6', '7', 'B', 'hello');
+INSERT INTO `ldhomeworkfb` VALUES ('35', '100', '6', '7', 'B', 'hello');
+INSERT INTO `ldhomeworkfb` VALUES ('38', '100', '6', '7', 'B', 'hello');
 
 -- ----------------------------
--- Table structure for lession
+-- Table structure for lduser
 -- ----------------------------
-DROP TABLE IF EXISTS `lession`;
-CREATE TABLE `lession` (
+DROP TABLE IF EXISTS `lduser`;
+CREATE TABLE `lduser` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `price` varchar(255) DEFAULT NULL,
+  `login_name` varchar(50) NOT NULL,
+  `class_id` bigint(20) DEFAULT NULL,
+  `class_name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `qq` varchar(50) DEFAULT NULL,
+  `token` varchar(500) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of lession
+-- Records of lduser
 -- ----------------------------
-INSERT INTO `lession` VALUES ('55', 'mick', '13.00');
-INSERT INTO `lession` VALUES ('56', 'mick1', '16.12');
-INSERT INTO `lession` VALUES ('57', 'mick1', '13.00');
-
--- ----------------------------
--- Table structure for t_menu
--- ----------------------------
-DROP TABLE IF EXISTS `t_menu`;
-CREATE TABLE `t_menu` (
-  `id` int(11) NOT NULL,
-  `menuName` varchar(255) NOT NULL,
-  `hint` varchar(255) DEFAULT NULL,
-  `order` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_menu
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_user2menu
--- ----------------------------
-DROP TABLE IF EXISTS `t_user2menu`;
-CREATE TABLE `t_user2menu` (
-  `id` int(11) NOT NULL,
-  `userName` varchar(255) NOT NULL,
-  `menuId` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_user2menu
--- ----------------------------
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('leader', '123456', '1');
